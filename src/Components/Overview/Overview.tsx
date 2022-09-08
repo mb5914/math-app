@@ -46,7 +46,7 @@ const App: FC = () => {
                     {questions.map((item: any) =>
                         <tr >
                             <td colSpan={4}>
-                                {item}
+                                {item.name}
                             </td>
                             <td colSpan={4}>
                                 <div>
