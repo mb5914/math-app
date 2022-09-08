@@ -16,7 +16,7 @@ const App: FC = () => {
 
     useEffect(() => {
         retrieveQuestions()
-    });
+    }, []);
 
     const retrieveQuestions = () => {
         QuestionService.getAll()
