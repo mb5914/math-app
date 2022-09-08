@@ -1,6 +1,6 @@
 
 import { FC, useEffect, useState } from 'react'
-import { getAll } from '../../services/QuestionService'
+import QuestionService from '../../services/QuestionService'
 
 const vragen: string[] = [
     "1a", "1b", "2a", "2b", "2c", "3a", "3b"
@@ -13,14 +13,23 @@ const students: string[] = [
 const App: FC = () => {
     const user: string = 'Piet'
     const [questions, setQuestions] = useState<any>([]);
-    
-    useEffect(() => {
-        const result = getAll();
 
-        setQuestions(result);
+    useEffect(() => {
+        retrieveQuestions()
     });
 
-    return (
+    const retrieveQuestions = () => {
+        QuestionService.getAll()
+            .then((response: any) => {
+                setQuestions(response.data);
+                console.log(response.data);
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
+    };
+
+    return questions && questions.length > 0 ? (
         <div className="App">
             <div style={{ border: '2px solid black', paddingLeft: 20, width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}><h6>Ingelogd als: {user}</h6></div>
             <h3>Hoofdstuk 1</h3>
@@ -34,7 +43,7 @@ const App: FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {questions.map((item : any) =>
+                    {questions.map((item: any) =>
                         <tr >
                             <td colSpan={4}>
                                 {item}
@@ -58,7 +67,7 @@ const App: FC = () => {
 
             </table>
         </div>
-    );
+    ) : <a>Loading...</a>;
 }
 
 export default App;
