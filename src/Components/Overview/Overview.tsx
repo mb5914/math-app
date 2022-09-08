@@ -1,5 +1,6 @@
 
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { getAll } from '../../services/QuestionService'
 
 const vragen: string[] = [
     "1a", "1b", "2a", "2b", "2c", "3a", "3b"
@@ -11,6 +12,13 @@ const students: string[] = [
 
 const App: FC = () => {
     const user: string = 'Piet'
+    const [questions, setQuestions] = useState<any>([]);
+    
+    useEffect(() => {
+        const result = getAll();
+
+        setQuestions(result);
+    });
 
     return (
         <div className="App">
@@ -26,8 +34,7 @@ const App: FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-
-                    {vragen.map((item) =>
+                    {questions.map((item : any) =>
                         <tr >
                             <td colSpan={4}>
                                 {item}
