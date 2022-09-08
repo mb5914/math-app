@@ -29,12 +29,20 @@ const App: FC = () => {
             });
     };
 
-    return questions && questions.length > 0 ? (
+    const sendStatus = (event: any, question: number) => {
+       if(event.target.checked) {
+        QuestionService.setStatus(1, question, 3)
+       } else {
+        QuestionService.setStatus(1, question, 0)
+       }
+    }
+
+    return questions && questions.length > 0 ?  (
         <div className="App">
             <div style={{ border: '2px solid black', paddingLeft: 20, width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}><h6>Ingelogd als: {user}</h6></div>
             <h3>Hoofdstuk 1</h3>
 
-            <table >
+            <table>
                 <thead>
                     <tr>
                         <th colSpan={4} style={{ width: "30%" }}>Vraag</th>
@@ -50,7 +58,7 @@ const App: FC = () => {
                             </td>
                             <td colSpan={4}>
                                 <div>
-                                    <input type="checkbox" />
+                                    <input type="checkbox" onChange={e => sendStatus(e, item)} />
                                 </div>
                             </td>
 
@@ -58,16 +66,20 @@ const App: FC = () => {
                                 <div>
                                     {students.map(item => <a style={{ marginRight: 15 }}>{item}</a>)}
                                 </div>
-
                             </td>
                         </tr>
                     )}
 
                 </tbody>
-
             </table>
+
+            <div>
+         
         </div>
-    ) : <a>Loading...</a>;
+        </div>
+
+        
+    ) : <a>Loading...</a> ;
 }
 
 export default App;

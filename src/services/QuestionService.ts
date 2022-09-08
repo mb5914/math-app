@@ -7,8 +7,14 @@ const getAll = async () => {
     return result;
 };
 
+const setStatus = (userId: number, questionId: number, state: number) => {
+    const data = {userId: userId, questionId: questionId, state: state}
+    return http.post<any>(`/UserQuestion/setState`, data);
+  };
+
 const QuestionService = {
     getAll,
+    setStatus
 }
 
 export default QuestionService
